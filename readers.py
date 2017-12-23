@@ -29,6 +29,13 @@ class AbstractReader(object):
         self.open_file.close()
 
     def __enter__(self):
+        """
+        whatever is returned here is set to the variable
+        after the 'as' in the 'with' statement.
+        If iterable, return the whole object, which can be
+            iterated.
+        if not, return the read text
+        """
         self.open_file()
         if self.iterable:
             return self
@@ -55,11 +62,11 @@ class JSONReader(AbstractReader):
         AbstractReader.__init__(self, filename, iterable, encoding)
 
     def __enter__(self):
-        self.open_file()
+        reader = AbstractReader.__enter__(self)
         if self.iterable:
-            return self
+            return reader
         else:
-            return json.loads(self.open_file.read())
+            return json.loads(reader)
 
     def read(self):
         return json.loads("".join(line for line in open_file.readlines()))
