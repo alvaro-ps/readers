@@ -1,5 +1,6 @@
 """Module with different readers
 - AbstractReader: reads any kind of text, either reading a line at a time or the whole file at once.
+    Also gets rid of the EOL character (\n)
 - JSONReader: reads JSON files, either one JSON per line or one JSON in the whole file
 """
 
@@ -15,7 +16,10 @@ class AbstractReader(object):
 
     def __enter__(self):
         self.open_file = open(self.filename, encoding=self.encoding)
-        return self.open_file
+        if self.iterable:
+            return self
+        else:
+            return self.open_file.read()
 
     def __exit__(self, *args):
         self.open_file.close()
@@ -25,7 +29,7 @@ class AbstractReader(object):
 
     def __iter__(self):
         self.iter_open_file = iter(self.open_file)
-        return self.iter_open_file
+        return self
 
     def __next__(self):
-        return self.iter_open_file.next().strip()
+        return next(self.iter_open_file).strip()
