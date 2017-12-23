@@ -5,6 +5,8 @@
 import csv
 from collections import namedtuple
 
+from .file_reader import FileReader
+
 class CSVReader(FileReader):
     """
     CSV files reader, allows to read a JSON file in two different ways:

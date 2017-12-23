@@ -2,6 +2,7 @@
 - JSONReader: reads JSON files, either one JSON per line or one JSON in the whole file
 """
 import json
+from .file_reader import FileReader
 
 class JSONReader(FileReader):
     """
