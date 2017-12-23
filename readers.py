@@ -1,11 +1,11 @@
 """Module with different readers
-- AbstractReader: reads any kind of text, either reading a line at a time or the whole file at once.
+- FileReader: reads any kind of text, either reading a line at a time or the whole file at once.
     Also gets rid of the EOL character (\n)
 - JSONReader: reads JSON files, either one JSON per line or one JSON in the whole file
 """
 import json
 
-class AbstractReader(object):
+class FileReader(object):
     """
     Reader, allows to read a file in two different ways:
         - Read the whole file at once and return it as a string.
@@ -55,18 +55,31 @@ class AbstractReader(object):
     def __next__(self):
         return next(self.iter_open_file).strip()
 
-class JSONReader(AbstractReader):
+class JSONReader(FileReader):
     """
+    JSON files reader, allows to read a JSON file in two different ways:
+        - Read the whole file at once and return it as a dict.
+        - Iterate over the file, returning one dict at a time.
     """
     def __init__(self, filename, iterable=False, encoding='utf-8'):
-        AbstractReader.__init__(self, filename, iterable, encoding)
+        """
+        Read the file in `filename`. If iterable=True, it can iterate over
+        a file, returning one line at a time
+        """
+        FileReader.__init__(self, filename, iterable, encoding)
 
     def __enter__(self):
-        reader = AbstractReader.__enter__(self)
+        reader = FileReader.__enter__(self)
         if self.iterable:
             return reader
         else:
             return json.loads(reader)
 
     def read(self):
-        return json.loads("".join(line for line in open_file.readlines()))
+        return json.loads(FileReader.read(self))
+
+    def __iter__(self):
+        return FileReader.__iter__(self)
+
+    def __next__(self):
+        return json.loads(FileReader.__next__(self))
