@@ -3,6 +3,7 @@
     Also gets rid of the EOL character (\n)
 - JSONReader: reads JSON files, either one JSON per line or one JSON in the whole file
 """
+import json
 
 class AbstractReader(object):
     """
@@ -46,3 +47,19 @@ class AbstractReader(object):
 
     def __next__(self):
         return next(self.iter_open_file).strip()
+
+class JSONReader(AbstractReader):
+    """
+    """
+    def __init__(self, filename, iterable=False, encoding='utf-8'):
+        AbstractReader.__init__(self, filename, iterable, encoding)
+
+    def __enter__(self):
+        self.open_file()
+        if self.iterable:
+            return self
+        else:
+            return json.loads(self.open_file.read())
+
+    def read(self):
+        return json.loads("".join(line for line in open_file.readlines()))
