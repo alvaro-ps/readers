@@ -5,7 +5,7 @@
 import csv
 from collections import namedtuple
 
-from .file_reader import FileReader
+from file_reader import FileReader
 
 class CSVReader(FileReader):
     """
