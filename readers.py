@@ -22,3 +22,10 @@ class AbstractReader(object):
 
     def read(self):
         return "".join(line for line in open_file.readlines())
+
+    def __iter__(self):
+        self.iter_open_file = iter(self.open_file)
+        return self.iter_open_file
+
+    def __next__(self):
+        return self.iter_open_file.next().strip()
