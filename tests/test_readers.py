@@ -1,32 +1,27 @@
 from unittest.mock import Mock, patch
 
-from ..readers import FileReader, JSONReader
+from readers import FileReader, JSONReader
 
+textfile = '../tests/files/test1.txt'
 class TestFileReader():
-    def test_whole_file():
-        textfile = './test_files/test1.txt'
-
-        print('Example reading a file')
+    def test_whole_file(self):
         with FileReader(textfile) as filetext:
-            print(filetext)
+            assert filetext
 
-    def test_iter_file():
+    def test_iter_file(self):
         with FileReader(textfile, iterable=True) as reader:
             for line in reader:
-                print(line)
-
-json_file = './test_files/test.json'
-json_iterable_file = './test_files/test_iterable.json'
+                assert line
 
 
+json_file = '../tests/files/test.json'
+json_iterable_file = '../tests/files/test_iterable.json'
 class TestJSONReader():
-    def test_whole_file():
-        print('Example reading a file')
+    def test_whole_file(self):
         with JSONReader(json_file) as json_record:
-            print(json_record.keys())
+            assert json_record.keys()
 
-    def test_iter_file():
-        print('Example iterating over a file')
+    def test_iter_file(self):
         with JSONReader(json_iterable_file, iterable=True) as reader:
             for json_record in reader:
-                print(json_record.keys())
+                assert json_record.keys()
