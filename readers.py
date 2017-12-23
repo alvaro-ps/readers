@@ -42,7 +42,11 @@ class FileReader(object):
         else:
             return self.open_file.read()
 
-    def __exit__(self, *args):
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type:
+            print(exc_type)
+            print(exc_value)
+            print(exc_traceback)
         self.close_file()
 
     def read(self):
