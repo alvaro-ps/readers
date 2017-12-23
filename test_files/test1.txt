@@ -1,0 +1,3 @@
+Hola, esta
+es una cadena
+de texto
