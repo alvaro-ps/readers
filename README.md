@@ -1,4 +1,4 @@
-# readers
+# readers[![Build Status](https://travis-ci.org/apastors/readers.png?branch=master)](https://travis-ci.org/apastors/readers)
 
 Easy reading.
 
