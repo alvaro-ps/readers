@@ -41,9 +41,8 @@ class FileReader(object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
-            print(exc_type)
-            print(exc_value)
-            print(exc_traceback)
+            print(traceback)
+            raise exc_type(exc_value)
         self.close_file()
 
     def read(self):
