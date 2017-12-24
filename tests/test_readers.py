@@ -1,8 +1,10 @@
+import os
+
 from unittest.mock import Mock, patch
 
 from readers import FileReader, JSONReader
 
-textfile = '../tests/files/test1.txt'
+textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader():
     def test_whole_file(self):
         with FileReader(textfile) as filetext:
@@ -14,8 +16,8 @@ class TestFileReader():
                 assert line
 
 
-json_file = '../tests/files/test.json'
-json_iterable_file = '../tests/files/test_iterable.json'
+json_file = os.sep + os.path.relpath('./tests/files/test.json', '/')
+json_iterable_file = os.sep + os.path.relpath('./tests/files/test_iterable.json', '/')
 class TestJSONReader():
     def test_whole_file(self):
         with JSONReader(json_file) as json_record:
