@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 from readers import FileReader, JSONReader
 
 textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
-class TestFileReader():
+class TestFileReader(object):
     def test_whole_fjile(self):
         expected = "Hola, esta\nes una cadena\nde texto\n"
         with FileReader(textfile) as filetext:
@@ -23,7 +23,7 @@ class TestFileReader():
 
 json_file = os.sep + os.path.relpath('./tests/files/test.json', '/')
 json_iterable_file = os.sep + os.path.relpath('./tests/files/test_iterable.json', '/')
-class TestJSONReader():
+class TestJSONReader(object):
     def test_whole_file(self):
         expected_keys = {"key1", "key2"}
         with JSONReader(json_file) as json_record:
