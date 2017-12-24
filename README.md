@@ -1,4 +1,6 @@
-# readers[![Build Status](https://travis-ci.org/apastors/readers.png?branch=master)](https://travis-ci.org/apastors/readers)
+# readers
+[![Build Status](https://travis-ci.org/apastors/readers.png?branch=master)](https://travis-ci.org/apastors/readers)
+[![codecov](https://codecov.io/gh/apastors/readers/branch/master/graph/badge.svg)](https://codecov.io/gh/apastors/readers)
 
 Easy reading.
 
