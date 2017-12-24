@@ -14,6 +14,9 @@ class TestFileReader():
     def test_iter_file(self):
         expected = ["Hola, esta", "es una cadena", "de texto"]
         with FileReader(textfile, iterable=True) as reader:
+            assert reader.encoding == "utf-8"
+            assert reader.filename == textfile
+            assert reader.iterable == True
             for line, expected_line in zip(reader, expected):
                 assert line == expected_line
 
