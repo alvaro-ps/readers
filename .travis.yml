@@ -6,9 +6,13 @@ python:
   - "3.6"
   - "3.7-dev"  # 3.7 development branch
 # command to install dependencies
+before_install:
+  - pip install --user codecov
 install:
   - pip install .
   - pip install -r requirements.txt
 # command to run tests
 script:
   - pytest tests/
+after_success:
+  - codecov --file coverage/lcov.info --disable search
