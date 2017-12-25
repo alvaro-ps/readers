@@ -34,8 +34,9 @@ class FileReader(object):
         if not, return the read text
         """
         self.open_file()
+        self.iter_open_file = iter(self.open_file)
         if self.iterable:
-            return self
+            return self.open_file
         else:
             return self.open_file.read()
 
@@ -46,11 +47,10 @@ class FileReader(object):
         self.close_file()
 
     def read(self):
-        return "".join(line for line in self.open_file)
+        return "".join(line for line in self)
 
     def __iter__(self):
-        self.iter_open_file = iter(self.open_file)
-        return self
+        return self.iter_open_file
 
     def __next__(self):
         return next(self.iter_open_file).strip()
