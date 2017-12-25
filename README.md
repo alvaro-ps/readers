@@ -65,3 +65,9 @@ value4
 value5
         
 ```
+
+# Code quality
+- #TODO check python versions at the top
+- [PEP8](https://www.python.org/dev/peps/pep-0008/))
+- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/))
+- Unit tests: [pytest](https://docs.pytest.org/en/latest/)
