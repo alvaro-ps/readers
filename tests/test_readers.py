@@ -2,7 +2,7 @@ import os
 
 from unittest.mock import Mock, patch
 
-from readers import FileReader, JSONReader
+from readers import FileReader, JSONReader, CSVReader
 
 textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader(object):
@@ -34,3 +34,15 @@ class TestJSONReader(object):
         with JSONReader(json_iterable_file, iterable=True) as reader:
             for json_record, expected_value in zip(reader, expected_values):
                 assert json_record['key2'] == expected_value
+
+
+csv_file = os.sep + os.path.relpath('./tests/files/test.csv', '/')
+class TestCSVReader(object):
+    def test_whole_file(self):
+        with CSVReader(csv_file) as csv_record:
+            assert csv_record
+
+    def test_iter_file(self):
+        with CSVReader(csv_file, iterable=True, header=True) as reader:
+            for csv_record, expected_value in reader:
+                assert csv_record
