@@ -25,21 +25,18 @@ class CSVReader(FileReader):
 
     def __enter__(self):
         reader = FileReader.__enter__(self)
-        csvreader = csv.reader(reader, delimiter=self.delimiter)
-        if self.header:
-            header = next(csvreader)
-            self.row = namedtuple('row', header)
 
         if self.iterable:
-            return csvreader
+            self.csvreader = csv.reader(reader, delimiter=self.delimiter)
+            return self.csvreader
         else:
-            return self.read()
+            return reader
 
     def read(self):
-        return FileReader.read(self)
+        return [line for line in self.csvreader]
 
     def __iter__(self):
-        return FileReader.__iter__(self)
+        return self.csvreader
 
     def __next__(self):
-        return self.row(FileReader.__next__(self).split(self.delimiter))
+        return next(self.csvreader)
