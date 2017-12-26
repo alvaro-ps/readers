@@ -21,6 +21,8 @@ class FileReader(object):
 
     def open_file(self):
         self.open_file = open(self.filename, encoding=self.encoding)
+        return iter(self.open_file)
+
         
     def close_file(self):
         self.open_file.close()
@@ -33,12 +35,11 @@ class FileReader(object):
             iterated.
         if not, return the read text
         """
-        self.open_file()
-        self.iter_open_file = iter(self.open_file)
+        self.iter_open_file = self.open_file()
         if self.iterable:
-            return self.open_file
+            return self
         else:
-            return self.open_file.read()
+            return self.read()
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
@@ -53,4 +54,4 @@ class FileReader(object):
         return self.iter_open_file
 
     def __next__(self):
-        return next(self.iter_open_file).strip()
+        return next(self).strip()
