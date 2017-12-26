@@ -23,8 +23,7 @@ class FileReader(object):
         self.open_file = open(self.filename, encoding=self.encoding)
         return iter(self.open_file)
 
-        
-    def close_file(self):
+    def close(self):
         self.open_file.close()
 
     def __enter__(self):
@@ -45,13 +44,13 @@ class FileReader(object):
         if exc_type:
             print(traceback)
             raise exc_type(exc_value)
-        self.close_file()
+        self.close()
 
     def read(self):
         return "".join(line for line in self)
 
     def __iter__(self):
-        return self.iter_open_file
+        return self
 
     def __next__(self):
-        return next(self).strip()
+        return next(self.iter_open_file).strip()
