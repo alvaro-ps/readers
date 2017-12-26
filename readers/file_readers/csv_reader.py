@@ -23,20 +23,24 @@ class CSVReader(FileReader):
         self.header = header
         self.delimiter = delimiter
 
+    def open_csv_file(self):
+        self.open_file = open(self.filename, encoding=self.encoding)
+        self.csvreader = csv.DictReader(self.open_file, delimiter=self.delimiter)
+        return iter(self.csvreader)
+
     def __enter__(self):
-        reader = FileReader.__enter__(self)
+        self.iter_csv_file = self.open_csv_file()
 
         if self.iterable:
-            self.csvreader = csv.reader(reader, delimiter=self.delimiter)
-            return self.csvreader
+            return self
         else:
-            return reader
+            return self.read()
 
     def read(self):
-        return [line for line in self.csvreader]
+        return [line for line in self]
 
     def __iter__(self):
-        return self.csvreader
+        return self
 
     def __next__(self):
-        return next(self.csvreader)
+        return next(self.iter_csv_file)
