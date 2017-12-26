@@ -3,3 +3,4 @@ test_files/*.py
 dist/*
 .coverage
 MANIFEST
+.cache
