@@ -13,6 +13,20 @@ class TestFileReader(object):
         assert f.encoding == "utf-8"
         f.close()
 
+    def test_enter(self):
+        f = FileReader(textfile)
+        result = f.__enter__()
+        expected = "Hola, esta\nes una cadena\nde texto"
+        assert result == expected
+        f.close()
+
+        f = FileReader(textfile, iterable=True)
+        result = f.__enter__()
+        expected = f
+        assert result == expected
+        f.close()
+
+
     def test_whole_fjile(self):
         expected = "Hola, esta\nes una cadena\nde texto"
         with FileReader(textfile) as filetext:
