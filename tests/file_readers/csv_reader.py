@@ -2,7 +2,7 @@ import os
 
 from readers.file_readers import CSVReader
 
-csv_file = os.sep + os.path.relpath('../tests/files/test.csv', '/')
+csv_file = os.sep + os.path.relpath('./tests/files/test.csv', '/')
 class TestCSVReader(object):
     def test_whole_file(self):
         expected = [

@@ -4,7 +4,7 @@ import pytest
 
 from readers import FileReader
 
-textfile = os.sep + os.path.relpath('../tests/files/test1.txt', '/')
+textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader(object):
     def test_init(self):
         f = FileReader(textfile)

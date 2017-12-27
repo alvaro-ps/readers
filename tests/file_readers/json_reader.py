@@ -2,8 +2,8 @@ import os
 
 from readers.file_readers import JSONReader
 
-json_file = os.sep + os.path.relpath('../tests/files/test.json', '/')
-json_iterable_file = os.sep + os.path.relpath('../tests/files/test_iterable.json', '/')
+json_file = os.sep + os.path.relpath('./tests/files/test.json', '/')
+json_iterable_file = os.sep + os.path.relpath('./tests/files/test_iterable.json', '/')
 class TestJSONReader(object):
     def test_whole_file(self):
         expected_keys = {"key1", "key2"}
