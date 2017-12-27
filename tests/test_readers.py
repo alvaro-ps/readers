@@ -26,7 +26,6 @@ class TestFileReader(object):
         assert result == expected
         f.close()
 
-
     def test_whole_fjile(self):
         expected = "Hola, esta\nes una cadena\nde texto"
         with FileReader(textfile) as filetext:
