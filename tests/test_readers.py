@@ -6,6 +6,13 @@ from readers import FileReader, JSONReader, CSVReader
 
 textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader(object):
+    def test_init(self):
+        f = FileReader(textfile)
+        assert f.filename == textfile
+        assert not f.iterable
+        assert f.encoding == "utf-8"
+        f.close()
+
     def test_whole_fjile(self):
         expected = "Hola, esta\nes una cadena\nde texto"
         with FileReader(textfile) as filetext:
