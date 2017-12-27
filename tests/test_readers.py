@@ -7,7 +7,7 @@ from readers import FileReader, JSONReader, CSVReader
 textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader(object):
     def test_whole_fjile(self):
-        expected = "Hola, esta\nes una cadena\nde texto\n"
+        expected = "Hola, esta\nes una cadena\nde texto"
         with FileReader(textfile) as filetext:
             assert filetext == expected
 
@@ -44,5 +44,5 @@ class TestCSVReader(object):
 
     def test_iter_file(self):
         with CSVReader(csv_file, iterable=True, header=True) as reader:
-            for csv_record, expected_value in reader:
+            for csv_record in reader:
                 assert csv_record
