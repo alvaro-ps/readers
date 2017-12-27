@@ -47,7 +47,7 @@ class FileReader(object):
         self.close()
 
     def read(self):
-        return "".join(line for line in self)
+        return "\n".join(line for line in self) #Add stripped \n
 
     def __iter__(self):
         return self
