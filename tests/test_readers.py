@@ -1,6 +1,6 @@
 import os
 
-from unittest.mock import Mock, patch
+import pytest
 
 from readers import FileReader, JSONReader, CSVReader
 
@@ -40,6 +40,10 @@ class TestFileReader(object):
             for line, expected_line in zip(reader, expected):
                 assert line == expected_line
 
+    def test_raises_exception(self):
+        with pytest.raises(ValueError):
+            with FileReader(textfile) as filetext:
+                raise ValueError
 
 json_file = os.sep + os.path.relpath('./tests/files/test.json', '/')
 json_iterable_file = os.sep + os.path.relpath('./tests/files/test_iterable.json', '/')
