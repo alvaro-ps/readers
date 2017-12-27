@@ -18,11 +18,7 @@ class JSONReader(FileReader):
         FileReader.__init__(self, filename, iterable, encoding)
 
     def __enter__(self):
-        reader = FileReader.__enter__(self)
-        if self.iterable:
-            return reader
-        else:
-            return json.loads(reader)
+        return FileReader.__enter__(self)
 
     def read(self):
         return json.loads(FileReader.read(self))
@@ -31,4 +27,8 @@ class JSONReader(FileReader):
         return FileReader.__iter__(self)
 
     def __next__(self):
-        return json.loads(FileReader.__next__(self))
+        nextline = FileReader.__next__(self)
+        if self.iterable:
+            return json.loads(nextline)
+        else:
+            return nextline
