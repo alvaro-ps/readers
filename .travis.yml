@@ -1,19 +1,25 @@
 language: python
 python:
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7-dev"  # 3.7 development branch
-# command to install dependencies
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
+- 3.7-dev
 before_install:
-  - pip install codecov
-  - pip install pytest-cov
+- pip install codecov
+- pip install pytest-cov
 install:
-  - pip install .
-  - pip install -r requirements.txt
-# command to run tests
+- pip install .
+- pip install -r requirements.txt
 script:
-  - python3 -m pytest tests/*/*.py --cov=./
+- python3 -m pytest tests/*/*.py --cov=./
 after_success:
-  - codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
+- codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
+deploy:
+  provider: pypi
+  user: apastors
+  on:
+    tags: true
+    branch: master
+  password:
+    secure: pdAymMILwICZavi2xYbixZNvykHnbLBI2GG925UO6Xrh6s55Y9kTIvUqty+cnHkoKfKshAE3aOsOWNopgnfk9cNQp5CJ60+ypunApIm9d89CC4C3WIY1d+/oNV81sVvDkRDPLU6wwpcMkshzBYavaSVlavbauBnwA8HNbE4cECup5Uq8H3n+uW5PUUAXGysoeaHPu03KxjLCOZ2cJBXN/U10N0opmDFH1eDe5B7nVqG/j2KFIXMXiGyVOBHsLan296ZI97yo8T6rlhwWTIdEI/AI9153+Uy3XhCXe1zu3QxB82WGcaYJQNEjzI4xgZ93JF2tgiARCC3XUGuS+TREF8nWrPqn7hUwUzbWsDKUIqJ05euftbnqmrQF4f3TDBXhIZ+glj1eROmGSbsoheCwAoasfGgw4IRIdt3QXAeVtGXAV+kEixXGzTOI3f6RKAdsnkCCJNgZf1ac+UH5CKeuoM2I/zqZk6uEV+GZBzsGAsc1A6nuxY8HHFq0BDiFA5UZANNU0CsjXIK4hfjyOdvDaJmH4LeMzEQYvZOODPR5LuQe/aTedx7a4lqgyTXEd0YKAK7LuRwQQDsViO7NC/sADyG8EVZELrqa1M/mk31KQf2QtVbqKGKjQHlS7/5tSRoqw4+s4s0cp5sBRP/8ccl28Vp4Y1bFnpmEQYObpWk5G4A=
