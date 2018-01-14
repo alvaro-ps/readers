@@ -19,6 +19,8 @@ class FileReader(object):
         self.iterable = iterable
         self.encoding = encoding
 
+        self.iter_open_file = self.open_file()
+
     def open_file(self):
         self.open_file = open(self.filename, encoding=self.encoding)
         return iter(self.open_file)
@@ -34,7 +36,6 @@ class FileReader(object):
             iterated.
         if not, return the read text
         """
-        self.iter_open_file = self.open_file()
         if self.iterable:
             return self
         else:

@@ -8,11 +8,12 @@ python:
 # command to install dependencies
 before_install:
   - pip install codecov
+  - pip install pytest-cov
 install:
   - pip install .
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - pytest tests/
+  - python3 -m pytest tests/*/*.py --cov=./
 after_success:
-  - codecov --token=5d56a8d5-6ada-4102-9c60-647e420bfce7
+  - codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
