@@ -4,7 +4,7 @@ that when called on a JSON object, returns a boolean value depending on whether 
 object fulfills the constrain imposed by the filter or not.
 """
 from .value_getters import ValueGetter
-from .operations import get_operation
+from .operations import Operation
 
 class Filter(object):
     def __init__(self, op1_getter, operation, op2):
@@ -15,7 +15,7 @@ class Filter(object):
         - op2: value for the second operand of `operation`.
         """
         self.op1_getter = ValueGetter(op1_getter)
-        self.operation = get_operation(operation)
+        self.operation = Operation(operation)
         self.op2 = op2
 
     def __call__(self, js):
