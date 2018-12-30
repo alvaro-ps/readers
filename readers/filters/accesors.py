@@ -3,12 +3,12 @@ Defines and facilitate access to a set of callables that will receive a row as i
 """
 import pyjq
 
-def get_value_from_json(js, getter_string):
+def make_json_getter(getter_string):
     """
-    Use jq-syntax to extract the desired value from the given json object
+    Use jq-syntax to compile a query that will fetch the required value
     """
     try:
-        value = pyjq.first(getter_string, js)
+        getter = pyjq.compile(getter_string)
     except ValueError as err:
         raise ValueError(f'{getter_string} does not compile. {err}')
-    return value
+    return getter
