@@ -26,11 +26,12 @@ class Filter(object):
         return self.operation(op1, self.op2)
 
     @classmethod
-    def fromConfig(cls, specs):
+    def fromConfig(cls, config):
         """
+        Create a filter from a dict with specifications.
         """
-        op1_getter = specs['query']
-        operation = specs['operation']
-        op2 = specs['value']
+        op1_getter = config['query']
+        operation = config['operation']
+        op2 = config['value']
 
         return cls(op1_getter, operation, op2)
