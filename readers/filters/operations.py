@@ -53,7 +53,7 @@ OPERATORS['float'] = float
 OPERATORS['int'] = int
 OPERATORS['len'] = len
 
-OPERATORS['to_set'] = set
+OPERATORS['to_set'] = to_set
 OPERATORS['identity'] = identity
 
 class Operation(object):

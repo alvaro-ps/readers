@@ -2,6 +2,9 @@
 Create a `Filter` object that needs to be compiled from a specification, and
 that when called on a JSON object, returns a boolean value depending on whether the
 object fulfills the constrain imposed by the filter or not.
+
+An specification can be composed of complex queries made of boolean operations among
+simple queries.
 """
 from .value_getters import ValueGetter
 from .operations import Operation
@@ -16,17 +19,17 @@ class Filter(object):
         - transform: if present apply this function to op1 after getting it
         """
         try:
-            self.op1 = ValueGetter(op1, **kwargs)
-        except ValueError as err:
+            self.op1 = Filter(**op1)
+        except TypeError as err:
             try:
-                self.op1 = Query(**op1)
-            except TypeError as err:
-                raise err
+                self.op1 = ValueGetter(op1, **kwargs)
+            except ValueError as err:
+                raise TypeError(f'Error in {op1}: {err}')
         try:
             self.op2 = ValueGetter(op2, **kwargs)
         except ValueError as err:
             try:
-                self.op2 = Query(**op2)
+                self.op2 = Filter(**op2)
             except TypeError as err:
                 self.op2 = op2
         self.operator = Operation(operator)
@@ -52,6 +55,6 @@ class Filter(object):
     @classmethod
     def fromConfig(cls, config):
         """
-        Create a query from a dict with specifications.
+        Create a filter from a dict with specifications.
         """
         return cls(**config)
