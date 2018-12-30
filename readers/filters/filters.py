@@ -22,7 +22,7 @@ class Filter(object):
         """
         Return whether the JSON object passes the filter.
         """
-        op1 = self.op1_getter.apply(js)
+        op1 = self.op1_getter.first(js)
         return self.operation(op1, self.op2)
 
     @classmethod
