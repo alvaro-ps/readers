@@ -7,4 +7,4 @@ def test_compile():
 
     getter = ValueGetter(getter_str)
     result = getter(d)
-    assert result = expected
+    assert result == expected
