@@ -17,9 +17,20 @@ class Filter(object):
         self.op1_getter = make_json_getter(op1_getter)
         self.operation = get_operation(operation)
         self.op2 = op2
+
     def __call__(self, js):
         """
         Return whether the JSON object passes the filter.
         """
         op1 = self.op1_getter.apply(js)
         return self.operation(op1, self.op2)
+
+    @classmethod
+    def fromConfig(cls, specs):
+        """
+        """
+        op1_getter = specs['query']
+        operation = specs['operation']
+        op2 = specs['value']
+
+        return cls(op1_getter, operation, op2)
