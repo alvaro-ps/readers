@@ -22,20 +22,21 @@ def identity(x):
 OPERATORS['identity'] = identity
 
 class Operation(object):
-    def __init__(self, opname):
+    def __init__(self, name):
         """
         Returns the operation requested or throw a KeyError if the operation
         is not found. 
-        `opname` is one of python's operators defined in the `operator` module.
+        `name` is one of python's operators defined in the `operator` module.
         """
         try:
-            self.operator = OPERATORS[opname]
+            self.name = name
+            self.operator = OPERATORS[name]
         except:
             available = list(OPERATORS.keys())
             raise KeyError(f'{opname} not in the list of possible choices: {available}')
 
     def __str__(self):
-        return self.operator.__name__
+        return self.name
 
     def __repr__(self):
         return self.__str__()
