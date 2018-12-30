@@ -19,6 +19,12 @@ class Filter(object):
         self.operation = Operation(operation)
         self.op2 = op2
 
+    def __str__(self):
+        return " - ".join([str(self.op1_getter), str(self.operation), str(self.op2)])
+
+    def __repr__(self):
+        return self.__str__()
+
     def __call__(self, js):
         """
         Return whether the JSON object passes the filter.

@@ -16,6 +16,11 @@ OPERATORS['len'] = len
 
 OPERATORS['to_set'] = set
 
+def identity(x):
+    return x
+
+OPERATORS['identity'] = identity
+
 class Operation(object):
     def __init__(self, opname):
         """
@@ -28,6 +33,12 @@ class Operation(object):
         except:
             available = list(OPERATORS.keys())
             raise KeyError(f'{opname} not in the list of possible choices: {available}')
+
+    def __str__(self):
+        return self.operator.__name__
+
+    def __repr__(self):
+        return self.__str__()
 
     def __call__(self, *args, **kwargs):
         return self.operator(*args, **kwargs)
