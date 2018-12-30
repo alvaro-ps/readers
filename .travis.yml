@@ -10,8 +10,7 @@ before_install:
 install:
 - pipenv install
 script:
-- python3 -m pytest tests/*/*.py
-- coverage run ./tests/*/*.py
+- python3 -m pytest tests/*/*.py --cov=readers
 after_success:
 - codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
 deploy:
