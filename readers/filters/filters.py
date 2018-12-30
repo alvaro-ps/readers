@@ -10,7 +10,7 @@ from .value_getters import ValueGetter
 from .operations import Operation
 
 class Filter(object):
-    def __init__(self, operator, op1, op2, **kwargs):
+    def __init__(self, operator, op1, op2=None, **kwargs):
         """
         - operator: operation name that will be used.
         - op1: jq-like string with the query that fetches the key, which
@@ -20,17 +20,17 @@ class Filter(object):
         """
         try:
             self.op1 = Filter(**op1)
-        except TypeError as err:
+        except TypeError:
             try:
                 self.op1 = ValueGetter(op1, **kwargs)
             except ValueError as err:
-                raise TypeError(f'Error in {op1}: {err}')
+                raise TypeError(f'Error in operand 1: {err}')
         try:
-            self.op2 = ValueGetter(op2, **kwargs)
-        except ValueError as err:
+            self.op2 = Filter(**op2)
+        except TypeError:
             try:
-                self.op2 = Filter(**op2)
-            except TypeError as err:
+                self.op2 = ValueGetter(op2, **kwargs)
+            except ValueError as err:
                 self.op2 = op2
         self.operator = Operation(operator)
 
