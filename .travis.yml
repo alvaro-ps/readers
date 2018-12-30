@@ -6,10 +6,9 @@ python:
 - '3.6'
 - 3.7-dev
 before_install:
-- pip install codecov
-- pip install pytest-cov
+- pip install pipenv
 install:
-  pipenv shell
+- pipenv install
 script:
 - python3 -m pytest tests/*/*.py --cov=./
 after_success:
