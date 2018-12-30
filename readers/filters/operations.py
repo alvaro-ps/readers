@@ -10,6 +10,12 @@ OPERATORS['in'] = lambda value1, set1: OPERATORS['contains'](set1, value1)
 OPERATORS['nintersects'] = lambda set1, set2: not OPERATORS['intersects'](set1, set2)
 OPERATORS['nin'] = lambda value1, set1: not OPERATORS['intersects'](set1, value1)
 
+OPERATORS['float'] = float
+OPERATORS['int'] = int
+OPERATORS['len'] = len
+
+OPERATORS['to_set'] = set
+
 class Operation(object):
     def __init__(self, opname):
         """
