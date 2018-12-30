@@ -1,4 +1,3 @@
-from .filters import Filter
 from .value_getters import ValueGetter
 from .operations import Operation
 
@@ -20,8 +19,6 @@ class Query(object):
                 self.op2 = op2
         self.operator = Operation(operator)
 
-        #self.op2 = Filter.fromConfig(op2)
-
     def __str__(self):
         return '(' + ' - '.join([str(self.op1), str(self.operator), str(self.op2)]) + ')'
 
@@ -39,3 +36,10 @@ class Query(object):
             op2 = self.op2
 
         return self.operator(op1, op2)
+
+    @classmethod
+    def fromConfig(cls, config):
+        """
+        Create a query from a dict with specifications.
+        """
+        return cls(**config)
