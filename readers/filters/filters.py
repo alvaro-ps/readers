@@ -7,7 +7,7 @@ from .value_getters import ValueGetter
 from .operations import Operation
 
 class Filter(object):
-    def __init__(self, op1_getter, operation, op2, transform=None):
+    def __init__(self, operation, op1, op2, transform=None):
         """
         - op1_getter: jq-like string with the query that fetches the key, which
             will be used as op1.
@@ -15,7 +15,7 @@ class Filter(object):
         - op2: value for the second operand of `operation`.
         - transform: if present apply this function to op1 after getting it
         """
-        self.op1_getter = ValueGetter(op1_getter, transform)
+        self.op1_getter = ValueGetter(op1, transform)
         self.operation = Operation(operation)
         self.op2 = op2
 
@@ -37,9 +37,9 @@ class Filter(object):
         """
         Create a filter from a dict with specifications.
         """
-        op1_getter = config['query']
+        op1_getter = config['op1']
         transform = config.get('transform')
-        operation = config['operation']
-        op2 = config['value']
+        operation = config['operator']
+        op2 = config['op2']
 
         return cls(op1_getter, operation, op2, transform)

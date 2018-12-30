@@ -13,7 +13,7 @@ class ValueGetter(object):
         try:
             self.string = getter_string
             self.getter = pyjq.compile(getter_string)
-        except ValueError as err:
+        except (AttributeError, ValueError) as err:
             raise ValueError(f'{getter_string} does not compile. {err}')
         self.transform = Operation(transform) if transform is not None else identity
 

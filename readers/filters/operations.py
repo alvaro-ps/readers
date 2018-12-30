@@ -46,6 +46,8 @@ OPERATORS['intersects'] = intersects
 OPERATORS['nintersects'] = nintersects
 OPERATORS['in'] = in_
 OPERATORS['nin'] = nin_
+OPERATORS['and'] = OPERATORS['and_']
+OPERATORS['or'] = OPERATORS['or_']
 
 OPERATORS['float'] = float
 OPERATORS['int'] = int
@@ -66,7 +68,7 @@ class Operation(object):
             self.operator = OPERATORS[name]
         except:
             available = list(OPERATORS.keys())
-            raise KeyError(f'{opname} not in the list of possible choices: {available}')
+            raise KeyError(f'{name} not in the list of possible choices: {available}')
 
     def __str__(self):
         return self.name
