@@ -3,22 +3,55 @@ from inspect import getmembers
 from functools import partial
 
 OPERATORS =  {name: func for name, func in getmembers(op) if not name.startswith('__')}
-OPERATORS['issubset'] = OPERATORS['le']
-OPERATORS['issuperset'] = OPERATORS['ge']
-OPERATORS['intersects'] = lambda set1, set2: bool(OPERATORS['and_'](set1, set2))
-OPERATORS['in'] = lambda value1, set1: OPERATORS['contains'](set1, value1)
-OPERATORS['nintersects'] = lambda set1, set2: not OPERATORS['intersects'](set1, set2)
-OPERATORS['nin'] = lambda value1, set1: not OPERATORS['intersects'](set1, value1)
+
+def identity(x):
+    return x
+
+def to_set(arg1):
+    try:
+        set1 = {arg1}
+    except TypeError:
+        set1 = set(arg1)
+    return set1
+
+def issubset(arg1, arg2):
+    set1 = to_set(arg1)
+    set2 = to_set(arg2)
+    return OPERATORS['le'](set1, set2)
+
+def issuperset(arg1, arg2):
+    set1 = to_set(arg1)
+    set2 = to_set(arg2)
+    return OPERATORS['ge'](set1, set2)
+
+def intersects(arg1, arg2):
+    set1 = to_set(arg1)
+    set2 = to_set(arg2)
+    return bool(OPERATORS['and_'](set1, set2))
+
+def nintersects(arg1, arg2):
+    return not intersects(arg1, arg2)
+
+def in_(value1, arg2):
+    set2 = to_set(arg2)
+    return OPERATORS['contains'](set2, value1)
+
+def nin_(value1, arg2):
+    return not in_(value1, arg2)
+
+
+OPERATORS['issubset'] = issubset
+OPERATORS['issuperset'] = issuperset
+OPERATORS['intersects'] = intersects
+OPERATORS['nintersects'] = nintersects
+OPERATORS['in'] = in_
+OPERATORS['nin'] = nin_
 
 OPERATORS['float'] = float
 OPERATORS['int'] = int
 OPERATORS['len'] = len
 
 OPERATORS['to_set'] = set
-
-def identity(x):
-    return x
-
 OPERATORS['identity'] = identity
 
 class Operation(object):
