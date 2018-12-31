@@ -98,14 +98,19 @@ class TestFilter():
                 'op2': 5
             }
         }
-        d1 = {'a': [1, 2, 3, 4, 5]}
-        expected = True
 
-        d2 = {'a': [1, 2]}
+        records = [
+            {'a': [1, 2, 3, 4, 5]},
+            {'a': [1, 2]}
+        ]
+        expected_results = [
+            True,
+            False
+        ]
 
         f = Filter.fromConfig(config)
-        assert f(d1)
-        assert not f(d2)
+        for d, expected in zip(records, expected_results):
+            assert f(d) == expected
 
     def test__call__complex_fail(self):
         config = {
