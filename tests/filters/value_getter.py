@@ -57,3 +57,20 @@ def test__str__transform():
     getter = ValueGetter(getter_str, transform=transform)
     result = str(getter)
     assert result == expected
+
+def test__repr__no_transform():
+    getter_str = '.key'
+    expected = '.key'
+
+    getter = ValueGetter(getter_str)
+    result = repr(getter)
+    assert result == expected
+
+def test__repr__transform():
+    getter_str = '.key'
+    transform = 'len'
+    expected = '.key (transform: len)'
+
+    getter = ValueGetter(getter_str, transform=transform)
+    result = repr(getter)
+    assert result == expected
