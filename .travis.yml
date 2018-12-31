@@ -8,7 +8,7 @@ python:
 before_install:
 - pip install pipenv
 install:
-- pipenv install
+- pipenv install --dev
 script:
 - python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml
 after_success:
