@@ -50,7 +50,12 @@ class Filter(object):
         except TypeError as err:
             op2 = self.op2
 
-        return self.operator(op1, op2)
+        try:
+            result = self.operator(op1, op2)
+        except TypeError as err:
+            raise TypeError(f'Operator {self.operator} does not accept either {op1} or {op2} as operands')
+
+        return result
 
     @classmethod
     def fromConfig(cls, config):
