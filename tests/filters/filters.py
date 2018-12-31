@@ -60,7 +60,7 @@ class TestFilter():
         expected = '(.a - ge - 3)'
         assert repr(f) == expected
 
-    def test__call__ok(self):
+    def test__call__simple_ok(self):
         op1 = '.a'
         operator = 'ge'
         op2 = 3
@@ -71,7 +71,7 @@ class TestFilter():
         f = Filter(op1=op1, operator=operator, op2=op2)
         assert f(d)
 
-    def test__call__fail(self):
+    def test__call__simple_fail(self):
         op1 = '.a'
         operator = 'ge'
         op2 = {}
@@ -79,5 +79,52 @@ class TestFilter():
         d = {'a': 5}
 
         f = Filter(op1=op1, operator=operator, op2=op2)
+        with raises(TypeError) as err:
+            f(d)
+
+    def test__call__complex_ok(self):
+        config = {
+            'operator': 'and',
+            'op1': {
+                'op1': '.a',
+                'transform': 'len',
+                'operator': 'ge',
+                'op2': 4
+            },
+            'op2': {
+                'op1': '.a',
+                'transform': 'len',
+                'operator': 'le',
+                'op2': 5
+            }
+        }
+        d1 = {'a': [1, 2, 3, 4, 5]}
+        expected = True
+
+        d2 = {'a': [1, 2]}
+
+        f = Filter.fromConfig(config)
+        assert f(d1)
+        assert not f(d2)
+
+    def test__call__complex_fail(self):
+        config = {
+            'operator': 'and',
+            'op1': {
+                'op1': '.a',
+                'transform': 'len',
+                'operator': 'ge',
+                'op2': 4
+            },
+            'op2': {
+                'op1': '.a',
+                'transform': 'len',
+                'operator': 'le',
+                'op2': {}
+            }
+        }
+        d = {'a': 5}
+
+        f = Filter.fromConfig(config)
         with raises(TypeError) as err:
             f(d)
