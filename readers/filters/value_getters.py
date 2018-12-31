@@ -26,7 +26,6 @@ class ValueGetter(object):
     def __repr__(self):
         return self.__str__()
 
-
     def __call__(self, js):
         value = self.getter.apply(js)
         if len(value) == 1:
