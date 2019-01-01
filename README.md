@@ -15,12 +15,11 @@ de texto
 ```
 It can be read directly as a `str`:
 ```python
-with FileReader(textfile) as filetext:
-    print(filetext)
+text = FileReader(textfile).read()
 ```
 or it can be iterated over as well, iterating line by line
 ```python
-with FileReader(textfile, iterable=True) as file_reader:
+with FileReader(textfile) as file_reader:
     for line in file_reader:
         print(line)
 ```
@@ -35,10 +34,10 @@ For example, consider this file
     "key2": 2
 }
 ```
-In this case, the `JSONReader` returns a `dict` :
+In this case, the `read` method of the `JSONReader` can be used, returning a `dict` :
 ```python
-with JSONReader(textfile) as json_record:
-    print(json_record.keys())
+json_record = JSONReader(textfile).read()
+print(json_record.keys())
 
 dict_keys(['key1', 'key2'])
 ```
@@ -53,7 +52,7 @@ We can also have these kinds of files:
 ```
 In this case, we can iterate over the file, returning a `dict` per line.
 ```python
-with JSONReader(filename_iterable, iterable=True) as json_reader:
+with JSONReader(filename_iterable) as json_reader:
     for json_record in json_reader:
         print(json_record["key1"])
  
@@ -64,6 +63,7 @@ value4
 value5
 
 # Code quality
+
 - [PEP8](https://www.python.org/dev/peps/pep-0008/) 
-- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/) 
-- Unit tests: [pytest](https://docs.pytest.org/en/latest/) 
+- Docstrings ( [PEP257](https://www.python.org/dev/peps/pep-0257/) )
+- Unit tests: [pytest](https://docs.pytest.org/en/latest/)
