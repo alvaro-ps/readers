@@ -77,4 +77,5 @@ class Operation(object):
         return self.__str__()
 
     def __call__(self, *args, **kwargs):
-        return self.operator(*args, **kwargs)
+        result = self.operator(*args, **kwargs)
+        return result
