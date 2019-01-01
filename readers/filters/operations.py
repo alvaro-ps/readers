@@ -68,7 +68,7 @@ class Operation(object):
             self.operator = OPERATORS[name]
         except:
             available = list(OPERATORS.keys())
-            raise KeyError(f'{name} not in the list of possible choices: {available}')
+            raise KeyError('{} not in the list of possible choices: {}'.format(name, available))
 
     def __str__(self):
         return self.name

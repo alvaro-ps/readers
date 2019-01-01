@@ -14,7 +14,7 @@ class ValueGetter(object):
             self.string = getter_string
             self.getter = pyjq.compile(getter_string)
         except (AttributeError, ValueError) as err:
-            raise ValueError(f'{getter_string} does not compile. {err}')
+            raise ValueError('{} does not compile. {}'.format(getter_string, err))
         self.transform = Operation(transform) if transform is not None else identity
 
     def __str__(self):

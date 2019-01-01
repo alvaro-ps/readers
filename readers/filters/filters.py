@@ -24,7 +24,7 @@ class Filter(object):
             try:
                 self.op1 = ValueGetter(op1, **kwargs)
             except ValueError as err:
-                raise TypeError(f'Error in operand 1: {err}')
+                raise TypeError('Error in operand 1: {}'.format(err))
         try:
             self.op2 = Filter(**op2)
         except TypeError:
