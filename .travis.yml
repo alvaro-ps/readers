@@ -9,9 +9,9 @@ before_install:
 install:
 - pipenv install --dev
 script:
-- python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml
+- python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml -v
 after_success:
-- codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
+- codecov
 deploy:
   provider: pypi
   user: apastors
