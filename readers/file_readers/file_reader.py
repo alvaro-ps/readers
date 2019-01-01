@@ -42,7 +42,7 @@ class FileReader(object):
     def __iter__(self):
         if self.file is None:
             raise IOError('File not yet open. Use `open` method')
-        return iter(self.file)
+        return self
 
     def __next__(self):
         return next(self.file)
