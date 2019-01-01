@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyjq = "*"
+"pathlib2" = "*"
+scandir = "*"
+
+[dev-packages]
+pytest = ">=3.3.1"
+codecov = "*"
+pytest-cov = "*"
+
+[requires]
+python_version = "3.7"

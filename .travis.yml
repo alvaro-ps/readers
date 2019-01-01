@@ -1,20 +1,17 @@
 language: python
 python:
-- '3.3'
 - '3.4'
 - '3.5'
 - '3.6'
-- 3.7-dev
+- '3.7-dev'
 before_install:
-- pip install codecov
-- pip install pytest-cov
+- pip install pipenv
 install:
-- pip install .
-- pip install -r requirements.txt
+- pipenv install --dev
 script:
-- python3 -m pytest tests/*/*.py --cov=./
+- python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml -v
 after_success:
-- codecov --token=f49a12a6-a0fa-4979-9a96-163c5eebc8f0
+- codecov
 deploy:
   provider: pypi
   user: apastors

@@ -54,20 +54,16 @@ We can also have these kinds of files:
 In this case, we can iterate over the file, returning a `dict` per line.
 ```python
 with JSONReader(filename_iterable, iterable=True) as json_reader:
-    ...:     for json_record in json_reader:
-    ...:         print(json_record["key1"])
-    ...:         
-    ...:     
+    for json_record in json_reader:
+        print(json_record["key1"])
+ 
 value1
 value2
 value3
 value4
 value5
-        
-```
 
 # Code quality
-- #TODO check python versions at the top
-- [PEP8](https://www.python.org/dev/peps/pep-0008/))
-- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/))
-- Unit tests: [pytest](https://docs.pytest.org/en/latest/)
+- [PEP8](https://www.python.org/dev/peps/pep-0008/) 
+- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/) 
+- Unit tests: [pytest](https://docs.pytest.org/en/latest/) 
