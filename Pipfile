@@ -12,6 +12,7 @@ scandir = "*"
 pytest = ">=3.3.1"
 codecov = "*"
 pytest-cov = "*"
+ipdb = "*"
 
 [requires]
 python_version = "3.7"
