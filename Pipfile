@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pyjq = "*"
+"pathlib2" = "*"
 
 [dev-packages]
 pytest = ">=3.3.1"
