@@ -61,9 +61,10 @@ value2
 value3
 value4
 value5
+```
 
 # Code quality
 
 - [PEP8](https://www.python.org/dev/peps/pep-0008/) 
-- Docstrings ( [PEP257](https://www.python.org/dev/peps/pep-0257/) )
+- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/))
 - Unit tests: [pytest](https://docs.pytest.org/en/latest/)
