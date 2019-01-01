@@ -1,46 +1,44 @@
 import os
 
-import pytest
+from pytest import raises
 
 from readers import FileReader
 
 textfile = os.sep + os.path.relpath('./tests/files/test1.txt', '/')
 class TestFileReader(object):
-    def test_init(self):
+    def test__init__(self):
         f = FileReader(textfile)
         assert f.filename == textfile
-        assert not f.iterable
         assert f.encoding == "utf-8"
-        f.close()
+        assert not f.is_open
+        assert f.file is None
 
-    def test_enter(self):
+    def test_open_closed_ok(self):
         f = FileReader(textfile)
-        result = f.__enter__()
-        expected = "Hola, esta\nes una cadena\nde texto"
-        assert result == expected
+        f.open()
+        assert f.is_open
         f.close()
+        assert not f.is_open
 
-        f = FileReader(textfile, iterable=True)
-        result = f.__enter__()
-        expected = f
+    def test_open_fails(self):
+        f = FileReader('wrong file that does not exist')
+        with raises(FileNotFoundError):
+            f.open()
+
+    def test__enter__(self):
+        with FileReader(textfile) as reader:
+            assert reader.is_open
+        assert not reader.is_open
+
+    def test_whole_file(self):
+        expected = "Hola, esta\nes una cadena\nde texto\n"
+        result = FileReader(textfile).read()
         assert result == expected
-        f.close()
-
-    def test_whole_fjile(self):
-        expected = "Hola, esta\nes una cadena\nde texto"
-        with FileReader(textfile) as filetext:
-            assert filetext == expected
 
     def test_iter_file(self):
-        expected = ["Hola, esta", "es una cadena", "de texto"]
-        with FileReader(textfile, iterable=True) as reader:
+        expected = ["Hola, esta\n", "es una cadena\n", "de texto\n"]
+        with FileReader(textfile) as reader:
             assert reader.encoding == "utf-8"
             assert reader.filename == textfile
-            assert reader.iterable == True
             for line, expected_line in zip(reader, expected):
                 assert line == expected_line
-
-    def test_raises_exception(self):
-        with pytest.raises(ValueError):
-            with FileReader(textfile) as filetext:
-                raise ValueError

@@ -1,57 +1,48 @@
-"""
-- FileReader: reads any kind of text, either reading a line at a time or the whole file at once.
-    Also gets rid of the EOL character (\n)
-"""
+"""FileReader: reads any kind of text, either reading a line at a time or the whole file at once."""
+
 class FileReader(object):
-    """
-    Reader, allows to read a file in two different ways:
-        - Read the whole file at once and return it as a string.
-        - Iterate over the file, one line at a time.
-
-    Use with the with statement.
-    """
-    def __init__(self, filename, iterable=False, encoding='utf-8'):
-        """
-        Read the file in `filename`. If iterable=True, it can iterate over
-        a file, returning one line at a time
-        """
+    """Basic text reader."""
+    def __init__(self, filename, encoding='utf-8'):
+        """Read the file in `filename`"""
         self.filename = filename
-        self.iterable = iterable
         self.encoding = encoding
+        self.is_open = False
+        self.file = None
 
-        self.iter_open_file = self.open_file()
-
-    def open_file(self):
-        self.open_file = open(self.filename, encoding=self.encoding)
-        return iter(self.open_file)
+    def open(self):
+        if self.file is not None:
+            raise IOError('File already open: {}'.format(self.filename))
+        self.file = open(self.filename, encoding=self.encoding)
+        self.is_open = True
+        return self.file
 
     def close(self):
-        self.open_file.close()
+        if self.file is not None:
+            self.file.close()
+            self.file = None
+            self.is_open = False
 
     def __enter__(self):
-        """
-        whatever is returned here is set to the variable
-        after the 'as' in the 'with' statement.
-        If iterable, return the whole object, which can be
-            iterated.
-        if not, return the read text
-        """
-        if self.iterable:
-            return self
-        else:
-            return self.read()
+        """Open the file if it is not open and return"""
+        if self.file is None:
+            self.open()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
         if exc_type:
             print(traceback)
             raise exc_type(exc_value)
-        self.close()
 
     def read(self):
-        return "\n".join(line for line in self) #Add stripped \n
+        if self.file is None:
+            self.open()
+        return self.file.read()
 
     def __iter__(self):
-        return self
+        if self.file is None:
+            raise IOError('File not yet open. Use `open` method')
+        return iter(self.file)
 
     def __next__(self):
-        return next(self.iter_open_file).strip()
+        return next(self.file)
