@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pyjq = "*"
 "pathlib2" = "*"
+scandir = "*"
 
 [dev-packages]
 pytest = ">=3.3.1"
