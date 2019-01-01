@@ -11,7 +11,7 @@ install:
 script:
 - python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml -v
 after_success:
-- codecov
+- codecov --file coverage.xml
 deploy:
   provider: pypi
   user: apastors
