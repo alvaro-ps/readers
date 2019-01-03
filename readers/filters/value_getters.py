@@ -27,7 +27,8 @@ class ValueGetter(object):
         return self.__str__()
 
     def __call__(self, js):
-        value = self.getter.apply(js)
-        if len(value) == 1:
-            value = value.pop()
+        try:
+            value = self.getter.one(js)
+        except IndexError:
+            value = self.getter.all(js)
         return self.transform(value)
