@@ -10,8 +10,8 @@ class TestCSVReader(object):
             {"a": "5", "b": "6", "c": "7", "d": "8"},
             {"a": "9", "b": "10", "c": "11", "d": "12"},
         ]
-        with CSVReader(csv_file) as csv_record:
-            assert csv_record == expected
+        csv_record = CSVReader(csv_file).read()
+        assert csv_record == expected
 
     def test_iter_file(self):
         expected = [
@@ -19,6 +19,6 @@ class TestCSVReader(object):
             {"a": "5", "b": "6", "c": "7", "d": "8"},
             {"a": "9", "b": "10", "c": "11", "d": "12"},
         ]
-        with CSVReader(csv_file, iterable=True, header=True) as reader:
+        with CSVReader(csv_file) as reader:
             for csv_record, expected_record in zip(reader, expected):
                 assert csv_record == expected_record

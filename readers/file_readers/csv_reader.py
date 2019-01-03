@@ -1,6 +1,6 @@
 """
 - CSVReader:  reads CSV files, either one row per line or one list of namedtuples, one per row.
-    It allows to specify delimiter and whether the file contains a header.
+    It allows to specify delimiter and a list of fieldnames. See python's DictReader (https://docs.python.org/3/library/csv.html#csv.DictReader) for an explanation.
 """
 import csv
 from collections import namedtuple
@@ -10,37 +10,24 @@ from .file_reader import FileReader
 class CSVReader(FileReader):
     """
     CSV files reader, allows to read a JSON file in two different ways:
-        - Read the whole file at once and return it as a list of namedtuples.
-        - Iterate over the file, returning one namedtuple at a time.
+        - Read the whole file at once and return it as a list of dicts.
+        - Iterate over the file, returning one dict at a time.
     """
-    def __init__(self, filename, delimiter=',', header=False,
-                 iterable=False, encoding='utf-8'):
-        """
-        Read the file in `filename`. If iterable=True, it can iterate over
-        a file, returning one line at a time
-        """
-        FileReader.__init__(self, filename, iterable, encoding)
-        self.header = header
+    def __init__(self, filename, delimiter=',', fieldnames=None, encoding='utf-8'):
+        """Read the file in `filename`"""
+        super().__init__(filename, encoding)
+        self.fieldnames = fieldnames
         self.delimiter = delimiter
 
-    def open_csv_file(self):
-        self.open_file = open(self.filename, encoding=self.encoding)
-        self.csvreader = csv.DictReader(self.open_file, delimiter=self.delimiter)
-        return iter(self.csvreader)
-
-    def __enter__(self):
-        self.iter_csv_file = self.open_csv_file()
-
-        if self.iterable:
-            return self
-        else:
-            return self.read()
+    def open(self):
+        self.file = super().open()
+        self.csvfile = csv.DictReader(self.file, fieldnames=self.fieldnames, delimiter=self.delimiter)
+        return self.csvfile
 
     def read(self):
-        return [line for line in self]
-
-    def __iter__(self):
-        return self
+        if self.file is None:
+            self.open()
+        return [line for line in self.csvfile]
 
     def __next__(self):
-        return next(self.iter_csv_file)
+        return next(self.csvfile)
