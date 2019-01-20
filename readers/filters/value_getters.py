@@ -33,10 +33,7 @@ class ValueGetter(object):
 
     def __call__(self, js):
         if self.getter:
-            try:
-                value = self.getter.one(js)
-            except IndexError:
-                value = self.getter.all(js)
+            value = self.getter.one(js)
         else:
             value = self.value
         return self.transform(value)
