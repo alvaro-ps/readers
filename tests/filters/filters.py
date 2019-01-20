@@ -13,29 +13,32 @@ class TestFilter():
         assert isinstance(f, Filter)
         assert f.op1.transform is identity
 
-    def test__init__ok_transform(self):
+    def test__init__ok_transform1(self):
         op1 = '.a'
         transform='len'
         operator = 'ge'
         op2 = 4
 
-        f = Filter(op1=op1, operator=operator, op2=op2, transform=transform)
+        f = Filter(op1=op1, operator=operator, op2=op2, transform1=transform)
         assert isinstance(f, Filter)
         assert f.op1.transform is not identity
         assert str(f.op1.transform) == 'len'
 
-    def test__init__fail(self):
-        op1 = 'a'
+    def test__init__ok_transform2(self):
+        op1 = '.a'
         operator = 'ge'
-        op2 = 3
+        op2 = [1, 2, 3]
+        transform='len'
 
-        with raises(TypeError) as err:
-            f = Filter(op1=op1, operator=operator, op2=op2)
+        f = Filter(op1=op1, operator=operator, op2=op2, transform2=transform)
+        assert isinstance(f, Filter)
+        assert f.op2.transform is not identity
+        assert str(f.op2.transform) == 'len'
 
     def test_fromConfig(self):
         config = {
             'op1': '.a',
-            'transform': 'len',
+            'transform1': 'len',
             'operator': 'ge',
             'op2': 4
         }
@@ -60,7 +63,7 @@ class TestFilter():
         expected = '(.a - ge - 3)'
         assert repr(f) == expected
 
-    def test__call__simple_ok(self):
+    def test__call__simple_ok_notransform(self):
         op1 = '.a'
         operator = 'ge'
         op2 = 3
@@ -70,6 +73,43 @@ class TestFilter():
 
         f = Filter(op1=op1, operator=operator, op2=op2)
         assert f(d)
+
+    def test__call__simple_ok_transform1(self):
+        op1 = '.a'
+        transform1 = 'len'
+        operator = 'ge'
+        op2 = 3
+
+        d = {'a': [5, 6, 7, 8]}
+        expected = True
+
+        f = Filter(op1=op1, transform1=transform1, operator=operator, op2=op2)
+        assert f(d) is expected
+
+    def test__call__simple_ok_transform2(self):
+        op1 = '.a'
+        operator = 'le'
+        op2 = [1, 2, 3, 4]
+        transform2 = 'len'
+
+        d = {'a': 3}
+        expected = True
+
+        f = Filter(op1=op1, operator=operator, op2=op2, transform2=transform2)
+        assert f(d) is expected
+
+    def test__call__simple_ok_transform_1and2(self):
+        op1 = '.a'
+        transform1 = 'len'
+        operator = 'eq'
+        op2 = [3, 4, 5, 6]
+        transform2 = 'len'
+
+        d = {'a': [1, 2, 3, 4]}
+        expected = True
+
+        f = Filter(op1=op1, transform1=transform1, operator=operator, op2=op2, transform2=transform2)
+        assert f(d) is expected
 
     def test__call__simple_fail(self):
         op1 = '.a'
@@ -87,13 +127,13 @@ class TestFilter():
             'operator': 'and',
             'op1': {
                 'op1': '.a',
-                'transform': 'len',
+                'transform1': 'len',
                 'operator': 'ge',
                 'op2': 4
             },
             'op2': {
                 'op1': '.a',
-                'transform': 'len',
+                'transform1': 'len',
                 'operator': 'le',
                 'op2': 5
             }
@@ -117,13 +157,13 @@ class TestFilter():
             'operator': 'and',
             'op1': {
                 'op1': '.a',
-                'transform': 'len',
+                'transform1': 'len',
                 'operator': 'ge',
                 'op2': 4
             },
             'op2': {
                 'op1': '.a',
-                'transform': 'len',
+                'transform1': 'len',
                 'operator': 'le',
                 'op2': {}
             }

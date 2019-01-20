@@ -10,28 +10,23 @@ from .value_getters import ValueGetter
 from .operations import Operation
 
 class Filter(object):
-    def __init__(self, operator, op1, op2=None, **kwargs):
+    def __init__(self, operator, op1, op2, transform1=None, transform2=None):
         """
         - operator: operation name that will be used.
         - op1: jq-like string with the query that fetches the key, which
             will be used as op1.
         - op2: value for the second operand of `operation`.
-        - transform: if present apply this function to op1 after getting it
+        - transform1: if present apply this function to op1 after getting it
+        - transform2: if present apply this function to op2 after getting it
         """
         try:
             self.op1 = Filter(**op1)
         except TypeError:
-            try:
-                self.op1 = ValueGetter(op1, **kwargs)
-            except ValueError as err:
-                raise TypeError('Error in operand 1: {}'.format(err))
+            self.op1 = ValueGetter(op1, transform=transform1)
         try:
             self.op2 = Filter(**op2)
         except TypeError:
-            try:
-                self.op2 = ValueGetter(op2, **kwargs)
-            except ValueError as err:
-                self.op2 = op2
+            self.op2 = ValueGetter(op2, transform=transform2)
         self.operator = Operation(operator)
 
     def __str__(self):
@@ -45,10 +40,7 @@ class Filter(object):
         Walks the tree and returns the boolean
         """
         op1 = self.op1(js)
-        try:
-            op2 = self.op2(js)
-        except TypeError as err:
-            op2 = self.op2
+        op2 = self.op2(js)
 
         result = self.operator(op1, op2)
 

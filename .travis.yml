@@ -9,7 +9,7 @@ before_install:
 install:
 - pipenv install --dev
 script:
-- python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml -v
+- python3 -m pytest ./tests/*/*.py --cov=readers --cov-report xml -v --spec
 after_success:
 - codecov --file coverage.xml
 deploy:
