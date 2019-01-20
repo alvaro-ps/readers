@@ -10,21 +10,21 @@ class FileReader(object):
         self.file = None
 
     def open(self):
-        if self.file is not None:
+        if self.is_open:
             raise IOError('File already open: {}'.format(self.filename))
         self.file = open(self.filename, encoding=self.encoding)
         self.is_open = True
         return self.file
 
     def close(self):
-        if self.file is not None:
+        if self.is_open:
             self.file.close()
             self.file = None
             self.is_open = False
 
     def __enter__(self):
         """Open the file if it is not open and return"""
-        if self.file is None:
+        if not self.is_open:
             self.open()
         return self
 
@@ -35,12 +35,12 @@ class FileReader(object):
             raise exc_type(exc_value)
 
     def read(self):
-        if self.file is None:
+        if not self.is_open:
             self.open()
         return self.file.read()
 
     def __iter__(self):
-        if self.file is None:
+        if not self.is_open:
             raise IOError('File not yet open. Use `open` method')
         return self
 
