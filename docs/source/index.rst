@@ -7,8 +7,10 @@ Welcome to readers's documentation!
 ===================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Contents:
+
+    readers/file_reader
 
 
 
