@@ -13,6 +13,7 @@ pytest = ">=3.3.1"
 codecov = "*"
 pytest-cov = "*"
 pytest-spec = "*"
+sphinx = "*"
 
 [requires]
 python_version = "3.7"
