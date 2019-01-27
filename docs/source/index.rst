@@ -12,6 +12,13 @@ Welcome to readers's documentation!
 
     readers/file_reader
 
+API
+===
+.. toctree::
+    :maxdepth: 2
+    :caption: API:
+
+    api/api
 
 
 Indices and tables
