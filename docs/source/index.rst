@@ -8,16 +8,24 @@ Welcome to readers's documentation!
 
 .. toctree::
     :maxdepth: 2
+    :glob:
     :caption: Contents:
 
-    readers/file_reader
+    readers/* 
 
-API
----
 .. toctree::
     :maxdepth: 2
+    :caption: Development:
 
-    api/api
+    development/standards
+
+.. toctree::
+    :glob:
+    :titlesonly:
+    :maxdepth: 2
+    :caption: API:
+
+    api/*
 
 
 Indices and tables

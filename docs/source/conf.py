@@ -181,6 +181,14 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+autodoc_default_options = {
+    'members': None,
+    'undoc-members': None,
+    'private-members': None,
+    'inherited-members': None,
+    'special-members': '__enter__, __exit__, __iter__, __next__'
+}
+autodoc_member_order = 'groupwise'
 
 # -- Options for intersphinx extension ---------------------------------------
 
