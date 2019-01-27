@@ -1,6 +1,5 @@
-"""
-- CSVReader:  reads CSV files, either one row per line or one list of namedtuples, one per row.
-    It allows to specify delimiter and a list of fieldnames. See python's DictReader (https://docs.python.org/3/library/csv.html#csv.DictReader) for an explanation.
+"""Reads CSV files, either one row per line or one list of namedtuples, one per row.
+It allows to specify delimiter and a list of fieldnames. See python's :class:`csv.DictReader` for an explanation.
 """
 import csv
 from collections import namedtuple

@@ -13,6 +13,17 @@ def identity(x):
     return x
 
 def to_set(arg1):
+    """Converts the given argument to a set.
+
+    Examples:
+        >>> to_set(1)
+        {1}
+
+        >>> to_set([1, 2, 3])
+        {1, 2, 3}
+
+    .. warning:: This function does not work with :obj:`range` objects, and maybe some others.
+    """
     try:
         set1 = {arg1}
     except TypeError:
@@ -20,6 +31,20 @@ def to_set(arg1):
     return set1
 
 def issubset(arg1, arg2):
+    """Check whether `arg1` is a subset of `arg2`. Both arguments are converted :func:`to_set`
+    before the check.
+
+    :argument arg1:
+    :argument arg1:
+
+    Examples:
+        >>> issubset({1}, {1, 2})
+        True
+        >>> issubset(1, [1, 2])
+        True
+        >>> issubset({3}, {1, 2})
+        False
+    """
     set1 = to_set(arg1)
     set2 = to_set(arg2)
     return OPERATORS['le'](set1, set2)
@@ -62,11 +87,21 @@ OPERATORS['to_set'] = to_set
 OPERATORS['identity'] = identity
 
 class Operation(object):
-    """Returns the operation requested or throw a KeyError if the operation
-    is not found. 
+    """Creates an operation object from a `name`, that can be then called on the necessary arguments. 
 
-    Args:
-        name (str): operator name defined in the `operator` module.
+    :argument str name: operator name defined in the :mod:`operator` module or any of the functions
+        in this module
+
+    :returns: the operation requested
+    :raises KeyError: if the operation is not found
+
+    Examples:
+        >>> op = Operation('in')
+        >>> op(1, [1, 2, 3])
+        True
+        >>> op = Operation('len')
+        >>> op([1, 2, 3])
+        3
     """
     def __init__(self, name):
         try:
