@@ -188,7 +188,7 @@ autodoc_default_options = {
     'inherited-members': None,
     'special-members': '__enter__, __exit__, __iter__, __next__'
 }
-autodoc_member_order = 'groupwise'
+autodoc_member_order = 'bysource'
 
 # -- Options for intersphinx extension ---------------------------------------
 
