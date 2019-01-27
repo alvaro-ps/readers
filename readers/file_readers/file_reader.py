@@ -1,15 +1,23 @@
-"""FileReader: reads any kind of text, either reading a line at a time or the whole file at once."""
+"""Reads any kind of text, either reading a line at a time or the whole file at once."""
 
 class FileReader(object):
-    """Basic text reader."""
+    """Basic text reader"""
     def __init__(self, filename, encoding='utf-8'):
-        """Read the file in `filename`"""
+        """Read the file in `filename`
+
+        :argument str filename: path to the file to be read.
+        :argument str encoding: encoding.
+        """
         self.filename = filename
         self.encoding = encoding
         self.is_open = False
         self.file = None
 
     def open(self):
+        """Open file if it is not already open
+        
+        :raises IOError: if the file is already open
+        """
         if self.is_open:
             raise IOError('File already open: {}'.format(self.filename))
         self.file = open(self.filename, encoding=self.encoding)
@@ -17,6 +25,7 @@ class FileReader(object):
         return self.file
 
     def close(self):
+        """Close file if it is open"""
         if self.is_open:
             self.file.close()
             self.file = None
@@ -35,6 +44,10 @@ class FileReader(object):
             raise exc_type(exc_value)
 
     def read(self):
+        """Reads the contents of the whole file.
+
+        :returns: Contents of the file
+        """
         if not self.is_open:
             self.open()
         return self.file.read()
