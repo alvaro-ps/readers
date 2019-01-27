@@ -1,4 +1,4 @@
-"""Reads CSV files, either one row per line or one list of namedtuples, one per row.
+"""Reads CSV files, either one row per line or one list of :class:`dict`, one per row.
 It allows to specify delimiter and a list of fieldnames. See python's :class:`csv.DictReader` for an explanation.
 """
 import csv
@@ -7,13 +7,12 @@ from collections import namedtuple
 from .file_reader import FileReader
 
 class CSVReader(FileReader):
-    """
-    CSV files reader, allows to read a JSON file in two different ways:
-        - Read the whole file at once and return it as a list of dicts.
-        - Iterate over the file, returning one dict at a time.
+    """Read the CSV file in `filename`
+
+    :argument str filename: path to the file to be read.
+    :argument str encoding: encoding.
     """
     def __init__(self, filename, delimiter=',', fieldnames=None, encoding='utf-8'):
-        """Read the file in `filename`"""
         super().__init__(filename, encoding)
         self.fieldnames = fieldnames
         self.delimiter = delimiter
