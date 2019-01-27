@@ -1,3 +1,8 @@
+"""Defines a set of operations to be used by the filters created with :class:`readers.filters.filters.Filter`, for both transformations and boolean operations.
+
+The functionality of this module is exposed through :class:`Operation`
+"""
+
 import operator as op
 from inspect import getmembers
 from functools import partial
@@ -57,12 +62,13 @@ OPERATORS['to_set'] = to_set
 OPERATORS['identity'] = identity
 
 class Operation(object):
+    """Returns the operation requested or throw a KeyError if the operation
+    is not found. 
+
+    Args:
+        name (str): operator name defined in the `operator` module.
+    """
     def __init__(self, name):
-        """
-        Returns the operation requested or throw a KeyError if the operation
-        is not found. 
-        `name` is one of python's operators defined in the `operator` module.
-        """
         try:
             self.name = name
             self.operator = OPERATORS[name]
