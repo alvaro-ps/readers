@@ -7,11 +7,11 @@ from .operations import Operation, identity
 
 class ValueGetter(object):
     def __init__(self, value, transform=None):
-        """
-        Creates a value getter that will return a value when applied on a JSON object.
-        `value` can be :
-            - jq-like string that will fetch the required value from the JSON object.
-            - a constant value that will be returned regardless of the JSON object.
+        """Creates a value getter that will return a value when applied on a JSON object.
+        `value` can be:
+
+        * jq-like string that will fetch the required value from the JSON object.
+        * a constant value that will be returned regardless of the JSON object.
 
         If transform is specified, it will be applied to the value before it is returned
         """
