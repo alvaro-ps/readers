@@ -1,8 +1,40 @@
-"""Defines a set of operations to be used by the filters created with :class:`readers.filters.filters.Filter`,
-for both transformations and boolean operations.
+"""Defines a set of operations to be used within the project. The functionality of this module is exposed
+through the class :class:`Operation`. The functions defined here are not meant to be used directly, but
+through this class.
 
-The functionality of this module is exposed through the class :class:`Operation`. The functions defined here
-are not meant to be used directly, but through this class.
+The operations can be divided in two categories:
+
+One argument operations
+-----------------------
+When defining transformations (with the class :class:`Operation <readers.filters.operations.Operation>`). This should
+be operations on **one** argument
+
+Two argument operations
+-----------------------
+When creating filters (with :class:`Filter <readers.filters.filters.Filter>`) with functions applied
+on **two** operands, such as :func:`intersects`, :func:`in` or :func:`issuperset` for simple filters :func:`and` or
+:func:`or` when creating complex nested filters.
+
+
+Usage
+-----
+    >>> from readers.filters.operation import Operation
+
+    >>> #one argument
+    >>> op = Operation('len')
+    >>> op([1, 2, 3, 4])
+    4
+    >>> op = Operation('len')
+    >>> op('abcde')
+    5
+
+    >>> #two arguments
+    >>> op = Operation('or')
+    >>> op(True, False)
+    True
+    >>> op = Operation('in')
+    >>> op(1, [1, 2, 3])
+    True
 """
 
 import operator as op
@@ -114,10 +146,6 @@ def in_(value1, arg2):
     :argument arg1:
     :argument arg1:
 
-    .. note::
-        In order to use this operator with the class :class:`Operation`, the name `in` must be used.
-        The underscore is appended to avoid name collisions
-
     Examples:
         >>> in_(1, {1, 2, 3})
         True
@@ -125,6 +153,15 @@ def in_(value1, arg2):
         True
         >>> in_(3, {1, 2})
         False
+
+    .. note::
+        In order to use this operator with the class :class:`Operation`, the name `in` must be used.
+
+            >>> Operation('in')
+            in
+
+        The underscore is appended to avoid name collisions
+
     """
     set2 = to_set(arg2)
     return OPERATORS['contains'](set2, value1)
@@ -205,5 +242,7 @@ class Operation(object):
         return self.__str__()
 
     def __call__(self, *args, **kwargs):
+        """Returns the operation on the called arguments
+        """
         result = self.operator(*args, **kwargs)
         return result
