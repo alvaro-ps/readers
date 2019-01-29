@@ -186,7 +186,7 @@ autodoc_default_options = {
     'undoc-members': None,
     'private-members': None,
     'inherited-members': None,
-    'special-members': '__enter__, __exit__, __iter__, __next__'
+    'special-members': '__enter__, __exit__, __iter__, __next__,__call__'
 }
 autodoc_member_order = 'bysource'
 
