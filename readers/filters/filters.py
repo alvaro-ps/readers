@@ -22,19 +22,15 @@ Simple Queries
 We will create a filter that will return ``True`` when ``key3`` is greather than 5.
 
 >>> from readers import Filter
->>> specs = {
-...     "op1": ".key3",
-...     "operator": "ge",
-...     "op2": 5
-... }
->>> f = Filter.fromConfig(specs)
+>>> f = Filter(op1='.key3', operator='ge', op2=5)
 >>> f(js)
 False
 
 Complex Queries
 ---------------
 We will create a filter that will return ``True`` when any of the ``key2`` s in the ``key1`` list
-contains the value 2 or ``key3`` equals 7
+contains the value 2 or ``key3`` equals 7. As this specification is more complex, the :meth:`fromConfig` method
+will be used.
 
 >>> specs = {
 ...     "op1": {
