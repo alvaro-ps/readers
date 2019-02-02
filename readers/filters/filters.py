@@ -1,5 +1,5 @@
 """
-Create a `Filter` object that needs to be compiled from a specification, and
+Create a :class:`Filter` object that needs to be compiled from a specification, and
 that when called on a JSON object, returns a boolean value depending on whether the
 object fulfills the constrain imposed by the filter or not.
 
@@ -29,7 +29,7 @@ False
 Complex Queries
 ---------------
 We will create a filter that will return ``True`` when any of the ``key2`` s in the ``key1`` list
-contains the value 2 or ``key3`` equals 7. As this specification is more complex, the :meth:`fromConfig` method
+contains the value 2 or ``key3`` equals 7. As this specification is more complex, the :meth:`fromConfig <readers.filters.filters.Filter.fromConfig>` method
 will be used.
 
 >>> specs = {
