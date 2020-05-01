@@ -71,7 +71,7 @@ class ValueGetter(object):
         :returns: [transformed] value from ``js``
         """
         if self.getter:
-            value = self.getter.apply(js)
+            value = self.getter.one(js)
         else:
             value = self.value
         return self.transform(value)
