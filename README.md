@@ -8,11 +8,15 @@ Easy reading.
 
 ### Plain text files
 For instance, consider this plain text file.
+
 ```
 Hola, esta
 es una cadena
-de texto ```
+de texto
+```
+
 It can be read directly as a `str`:
+
 ```python
 text = FileReader(textfile).read()
 ```
