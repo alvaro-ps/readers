@@ -1,20 +1,53 @@
-"""
-Defines and facilitate access to a set of callables that will receive a row as input and will return a value
+"""Defines a getter that, when calling a JSON object, returns a value. This definition can be:
+
+* a **jq-like expression**:  ``'.key1[].key2'``
+* a **value**: anything that does not compile to a jq query ``(1, [1, 2, 3], 'string')``
+
+Optionally, a transform operation can be applied after the value is extracted. This operation must
+accept **one** parameter:
+
+* `len` when the getter returns a list
+* `int` in order to convert a string to a numeric value, ...
+
+See :mod:`readers.filters.operations`.
+
+Usage
+-----
+.. code-block:: python
+
+    >>> from readers.filters.value_getters import ValueGetter
+    >>> js = {
+    ...     "key1": [
+    ...         {"key2": 1},
+    ...         {"key2": 2},
+    ...         {"key2": 3}
+    ...     ]
+    ... }
+    >>> g = ValueGetter('.key1[].key2')
+    >>> g(js)
+    [1, 2, 3]
+    >>> g = ValueGetter('.key1[].key2', transform='len')
+    >>> g(js)
+    3
+    >>> g = ValueGetter(5)
+    >>> g(js)
+    5
 """
 import pyjq
 
 from .operations import Operation, identity
 
 class ValueGetter(object):
-    def __init__(self, value, transform=None):
-        """
-        Creates a value getter that will return a value when applied on a JSON object.
-        `value` can be :
-            - jq-like string that will fetch the required value from the JSON object.
-            - a constant value that will be returned regardless of the JSON object.
+    """Creates a value getter that will return a value when applied on a JSON object.
+    
+    :argument value:
 
-        If transform is specified, it will be applied to the value before it is returned
-        """
+        * a **jq-like expression**:  ``'.key1[].key2'``
+        * a **value**: anything that does not compile to a jq query (``1``, ``[1, 2, 3]``, ``'string'``)
+
+    :argument transform: operation name that will be passed on to :class:`Operation <readers.filters.operations.Operation>`
+    """
+    def __init__(self, value, transform=None):
         self.value = value
         try:
             self.getter = pyjq.compile(value)
@@ -32,6 +65,11 @@ class ValueGetter(object):
         return self.__str__()
 
     def __call__(self, js):
+        """Call the getter on the passed json object and return the value (transformed if required)
+
+        :argument ``js``: JSON :class:`dict`.
+        :returns: [transformed] value from ``js``
+        """
         if self.getter:
             value = self.getter.one(js)
         else:

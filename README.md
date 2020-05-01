@@ -11,8 +11,7 @@ For instance, consider this plain text file.
 ```
 Hola, esta
 es una cadena
-de texto
-```
+de texto ```
 It can be read directly as a `str`:
 ```python
 text = FileReader(textfile).read()
@@ -63,8 +62,21 @@ value4
 value5
 ```
 
-# Code quality
+For JSON files, `Filter`s can be added too:
 
-- [PEP8](https://www.python.org/dev/peps/pep-0008/) 
-- Docstrings ([PEP257](https://www.python.org/dev/peps/pep-0257/))
-- Unit tests: [pytest](https://docs.pytest.org/en/latest/)
+```python
+from readers.filters import Filter
+
+f = Filter(op1='.key2', operator='ge', op2=3)
+
+with JSONReader(filename_iterable) as json_reader:
+    for json_record in json_reader:
+        if f(json_record):
+            print(json_record["key1"])
+ 
+value3
+value4
+value5
+
+```
+Note: filters provide a functionality that should be separate from readers, i.e, stored as a different library.

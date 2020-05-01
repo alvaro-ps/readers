@@ -7,12 +7,15 @@ name = "pypi"
 pyjq = "*"
 "pathlib2" = "*"
 scandir = "*"
+pipfile = "*"
 
 [dev-packages]
 pytest = ">=3.3.1"
 codecov = "*"
 pytest-cov = "*"
 pytest-spec = "*"
+sphinx = "*"
+recommonmark = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
