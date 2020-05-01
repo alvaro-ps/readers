@@ -78,5 +78,5 @@ value3
 value4
 value5
 
-Note: Filters provide a functionality that should be separate from filters, i.e, stored as a different library.
 ```
+Note: filters provide a functionality that should be separate from readers, i.e, stored as a different library.
